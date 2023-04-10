@@ -2,27 +2,27 @@ import Dependencies._
 
 enablePlugins(GatlingPlugin)
 
+Test / PB.targets := Seq(
+  scalapb.gen() -> (Test / sourceManaged).value,
+)
+
 lazy val root = (project in file("."))
   .settings(
     inThisBuild(
       List(
-        organization := "sometests",
+        organization := "ru.tinkoff.load",
         scalaVersion := "2.13.8",
         version      := "0.1.0",
       ),
     ),
-    name := "sometests",
+    name := "mygrpc",
     libraryDependencies ++= gatling,
-    libraryDependencies ++= gelf,
     libraryDependencies ++= gatlingPicatinny,
     libraryDependencies ++= janino,
-    Test / PB.targets := Seq(
-      scalapb.gen() -> (Test / sourceManaged).value
-    ) ,
     libraryDependencies ++= gatlingGrpc,
     libraryDependencies ++= grpcDeps,
-
-      scalacOptions ++= Seq(
+    libraryDependencies ++= epoll,
+    scalacOptions ++= Seq(
       "-encoding",
       "UTF-8",
       "-Xfatal-warnings",
